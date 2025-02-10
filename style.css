@@ -1,58 +1,86 @@
-*{
+* {
     font-family: "Agency FB";
 }
-h1{
+
+h1 {
     color: #A63D40;
     font-size: 50px;
     text-align: center;
     margin-top: 50px;
+    transition: scale 0.4s;;
     text-shadow: 4px 4px 4px #70798C;
+    width:auto;
 
 }
-p{
+
+h1:hover {
+    scale: 1.2;
+    transform: rotate(-2deg);
+
+}
+
+p {
     color: #151515;
     font-size: 20px;
     text-align: center;
 
 }
-.flexbox{
+
+.flexbox {
     display: flex;
-    justify-content: start;
-    align-items: start;
-    height: 50vh;
-    flex-direction: row;
-
-
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 50px;
 }
-.flexbox div{
-    margin: 10px;
+
+.flexbox div {
+    margin: 20px;
     padding: 20px;
     border: 1px solid #A63D40;
     border-radius: 10px;
     background-color: #F2F2F2;
     box-shadow: 5px 5px 5px #A63D40;
-;
+    width: 500px;
+    transition: scale 0.4s;;
 }
-.flexbox > div > h2{
+
+.flexbox div:hover {
+    scale: 1.05;
+    filter: brightness(110%);
+
+
+}
+
+.flexbox > div > h2 {
     text-align: center;
 }
-.upload-box{
+
+.upload-box {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     height: 5vh;
     flex-direction: row;
     Border: 1px solid black;
     width: 300px;
+    margin: auto;
 }
-.upload-box > div > button{
+
+.upload-box > div > button {
     margin-left: 5px;
+    font-size: large;
+
 }
-.upload-box > div > p{
+
+.upload-box > div > p {
     text-align: start;
-    padding:0px;
+    padding: 0px;
     margin: 0px;
     margin-left: 10px;
     font-size: 20px;
 
+}
+body {
+    background-image: url("images/basketballbanner.jpg");
 }
