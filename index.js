@@ -71,4 +71,56 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+    // settings.js
+    document.addEventListener('DOMContentLoaded', function() {
+        // Profile dropdown functionality
+        const profileButton = document.getElementById('profile-button');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+
+        profileButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!dropdownMenu.contains(e.target) && !profileButton.contains(e.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+
+        dropdownMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Settings functionality
+        const saveButton = document.querySelector('.save-button');
+        if (saveButton) {
+            saveButton.addEventListener('click', function() {
+                // Here you would typically save the settings to your backend
+                alert('Settings saved successfully!');
+            });
+        }
+
+        // Add event listeners for switches
+        const switches = document.querySelectorAll('.switch input');
+        if (switches) {
+            switches.forEach(switchEl => {
+                switchEl.addEventListener('change', function() {
+                    console.log(this.checked ? 'Enabled' : 'Disabled');
+                    // Here you can add specific functionality for each switch
+                });
+            });
+        }
+
+        // Add event listeners for selects
+        const selects = document.querySelectorAll('.settings-select');
+        if (selects) {
+            selects.forEach(select => {
+                select.addEventListener('change', function() {
+                    console.log('Selected:', this.value);
+                    // Here you can add specific functionality for each select
+                });
+            });
+        }
+    });
 });
