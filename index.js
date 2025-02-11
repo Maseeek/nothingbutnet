@@ -1,7 +1,7 @@
 console.log('Happy developing ✨')
 
 function GetFile(callbackFunction){
-    const fileInput = document.createElement('input');
+    const fileInput  = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = 'video/*';
     fileInput.onchange = (event) => {

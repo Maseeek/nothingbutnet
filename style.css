@@ -106,9 +106,10 @@ body {
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    font-family:  Arial, Helvetica, sans-serif;
-    width: 41.5px;
-    height: 41.5px;
+    width: 50px; /* Set the width */
+    height: 50px; /* Set the height */
+    margin: 35px;
+    margin-right: 10px;
 }
 
 .profile-btn:hover {
