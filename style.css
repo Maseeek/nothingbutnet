@@ -7,21 +7,20 @@ h1 {
     font-size: 50px;
     text-align: center;
     margin-top: 50px;
-    transition: scale 0.4s;;
-    text-shadow: 4px 4px 4px #70798C;
+    transition: transform 0.4s;;
+    text-shadow: 4px 4px 4px #F2F2F2;
     width:auto;
 
 }
 
 h1:hover {
-    scale: 1.2;
-    transform: rotate(-2deg);
+    transform: scale(1.2) rotate(-2deg);
 
 }
 
 p {
     color: #151515;
-    font-size: 20px;
+    font-size: 25px;
     text-align: center;
 
 }
@@ -41,7 +40,7 @@ p {
     border-radius: 10px;
     background-color: #F2F2F2;
     box-shadow: 5px 5px 5px #A63D40;
-    width: 500px;
+    width: 520px;
     transition: scale 0.4s;;
 }
 
@@ -62,14 +61,19 @@ p {
     align-items: center;
     height: 5vh;
     flex-direction: row;
-    Border: 1px solid black;
-    width: 300px;
+    Border: 2px darkred solid;
+    width: 350px;
     margin: auto;
+    background-color: rgba(242, 242, 242, 0.5);
+
 }
+
 
 .upload-box > div > button {
     margin-left: 5px;
     font-size: large;
+    border: darkred solid 2px;
+
 
 }
 
@@ -78,9 +82,10 @@ p {
     padding: 0px;
     margin: 0px;
     margin-left: 10px;
-    font-size: 20px;
-
+    font-size: 25px;
+    text-shadow: #F2F2F2 2px 2px 2px;
 }
 body {
     background-image: url("images/basketballbanner.jpg");
+    overflow-x: hidden;
 }
