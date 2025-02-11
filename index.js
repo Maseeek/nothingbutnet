@@ -1,7 +1,7 @@
-console.log('Happy developing ✨')
+console.log('Happy developing ✨');
 
-function GetFile(callbackFunction){
-    const fileInput  = document.createElement('input');
+function GetFile(callbackFunction) {
+    const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = 'video/*';
     fileInput.onchange = (event) => {
@@ -16,10 +16,11 @@ function GetFile(callbackFunction){
     fileInput.click();
 }
 
-function ChangeUploadedStatus(){
+function ChangeUploadedStatus() {
     document.getElementById("upload-button").innerHTML = "UPLOADED";
     document.getElementById("upload-button").style.backgroundColor = "#689689";
 }
+
 const profileButton = document.getElementById('profile-button');
 const dropdownMenu = document.getElementById('dropdown-menu');
 
@@ -39,4 +40,35 @@ document.addEventListener('click', (e) => {
 // Prevent dropdown from closing when clicking inside it
 dropdownMenu.addEventListener('click', (e) => {
     e.stopPropagation();
+});
+
+// Settings page functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const saveButton = document.querySelector('.save-button');
+    if (saveButton) {
+        saveButton.addEventListener('click', function() {
+            // Here you would typically save the settings to your backend
+            alert('Settings saved successfully!');
+        });
+    }
+
+    // Add event listeners for switches
+    const switches = document.querySelectorAll('.switch input');
+    if (switches) {
+        switches.forEach(switchElement => {
+            switchElement.addEventListener('change', function() {
+                console.log(this.checked ? 'Enabled' : 'Disabled');
+            });
+        });
+    }
+
+    // Add event listeners for selects
+    const selects = document.querySelectorAll('.settings-select');
+    if (selects) {
+        selects.forEach(select => {
+            select.addEventListener('change', function() {
+                console.log('Selected:', this.value);
+            });
+        });
+    }
 });
