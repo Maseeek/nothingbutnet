@@ -108,16 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 switchEl.addEventListener('change', function() {
                     console.log(this.checked ? 'Enabled' : 'Disabled');
                     // Here you can add specific functionality for each switch
-                    if (this.id === 'dark-mode-toggle') {
-                        if(this.checked) {
-                            console.log('Dark mode enabled');
-
-                            // Add your dark mode enabling logic here
-                        } else {
-                            console.log('Dark mode disabled');
-                            // Add your dark mode disabling logic here
-                        }
-                    }
                 });
             });
         }
@@ -136,10 +126,59 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('dark-mode-toggle').addEventListener('change', function() {
         if (this.checked) {
             console.log('Dark mode enabled');
+            toggleDarkMode(true);
             // Add your dark mode enabling logic here
         } else {
             console.log('Dark mode disabled');
+            toggleDarkMode(false);
             // Add your dark mode disabling logic here
         }
     });
 });
+
+
+function toggleDarkMode(enabled){
+    if(enabled){
+        document.querySelectorAll('.settings-section').forEach(section => {
+            section.style.backgroundColor = '#333333';
+        });
+        document.querySelectorAll('.setting-label').forEach(section => {
+            section.style.color = '#f9f9f9';
+        });
+        document.querySelectorAll('.settings-section h2').forEach(header => {
+            header.style.color = '#EB5258';
+        });
+        document.querySelectorAll('.settings-section h1').forEach(header => {
+            header.style.textShadow = '0 1px 1px red';
+        });
+        document.querySelectorAll('.settings-select').forEach(header => {
+            header.style.backgroundColor = '#333333';
+        });
+        document.querySelectorAll('.settings-select').forEach(header => {
+            header.style.color = '#f9f9f9';
+        });
+        document.querySelector('.home-btn').style.backgroundColor = '#333333';
+        document.querySelector('.profile-btn').style.backgroundColor = '#333333';
+
+
+        } else {
+        document.querySelectorAll('.settings-section').forEach(section => {
+            section.style.backgroundColor = '#f9f9f9';
+        });
+        document.querySelectorAll('.setting-label').forEach(section => {
+            section.style.color = '#333333';
+        });
+        document.querySelectorAll('.settings-section h2').forEach(header => {
+            header.style.color = '#A63D40';
+        });
+        document.querySelectorAll('.settings-select').forEach(header => {
+            header.style.backgroundColor = '#f9f9f9';
+        });
+        document.querySelectorAll('.settings-select').forEach(header => {
+            header.style.color = '#333333';
+        });
+        document.querySelector('.home-btn').style.backgroundColor = '#f9f9f9';
+        document.querySelector('.profile-btn').style.backgroundColor = '#f9f9f9';
+    }
+}
+
