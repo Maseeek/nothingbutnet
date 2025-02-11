@@ -97,6 +97,7 @@ p {
 body {
     background-image: url("images/basketballbanner.jpg");
     overflow-x: hidden;
+    background-size: cover;
 }
 
 .nav-container {

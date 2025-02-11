@@ -108,6 +108,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 switchEl.addEventListener('change', function() {
                     console.log(this.checked ? 'Enabled' : 'Disabled');
                     // Here you can add specific functionality for each switch
+                    if (this.id === 'dark-mode-toggle') {
+                        if(this.checked) {
+                            console.log('Dark mode enabled');
+
+                            // Add your dark mode enabling logic here
+                        } else {
+                            console.log('Dark mode disabled');
+                            // Add your dark mode disabling logic here
+                        }
+                    }
                 });
             });
         }
@@ -121,6 +131,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Here you can add specific functionality for each select
                 });
             });
+        }
+    });
+    document.getElementById('dark-mode-toggle').addEventListener('change', function() {
+        if (this.checked) {
+            console.log('Dark mode enabled');
+            // Add your dark mode enabling logic here
+        } else {
+            console.log('Dark mode disabled');
+            // Add your dark mode disabling logic here
         }
     });
 });
