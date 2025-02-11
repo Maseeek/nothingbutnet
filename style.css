@@ -110,6 +110,7 @@ body {
     height: 50px; /* Set the height */
     margin: 35px;
     margin-right: 10px;
+    margin-bottom: 5px;
 }
 
 .profile-btn:hover {
