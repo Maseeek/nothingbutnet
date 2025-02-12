@@ -182,3 +182,12 @@ function toggleDarkMode(enabled){
     }
 }
 
+function updateProfile(name, position, rank) {
+    document.getElementById('player-name').textContent = name;
+    document.getElementById('player-position').textContent = position;
+    document.getElementById('player-rank').textContent = rank;
+}
+
+// Example usage:
+updateProfile('LeBron James', 'SF', 'All-Star');
+
