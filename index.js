@@ -18,7 +18,7 @@ function GetFile(callbackFunction) {
 
 function ChangeUploadedStatus() {
     document.getElementById("upload-button").innerHTML = "UPLOADED";
-    document.getElementById("upload-button").style.backgroundColor = "#689689";
+    document.getElementById("upload-button").style.backgroundColor = "#149D2F";
 }
 
 const profileButton = document.getElementById('profile-button');
@@ -187,6 +187,19 @@ function updateProfile(name, position, rank) {
     document.getElementById('player-position').textContent = position;
     document.getElementById('player-rank').textContent = rank;
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const profileBtn = document.getElementById('profile-btn');
+    const profileSvg = profileBtn.querySelector('svg');
+
+    profileBtn.addEventListener('mouseover', function() {
+        profileSvg.classList.add('hovered'); // Add class on hover
+    });
+
+    profileBtn.addEventListener('mouseout', function() {
+        profileSvg.classList.remove('hovered'); // Remove class when not hovered
+    });
+});
+
 
 // Example usage:
 updateProfile('LeBron James', 'SF', 'Gold');

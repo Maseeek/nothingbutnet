@@ -1,18 +1,25 @@
 * {
     font-family: "Agency FB";
+    font-weight: bold;
 }
 
 h1 {
-    color: #A63D40;
+    color: #9D1419;
     font-size: 80px;
     text-align: center;
-    margin-top: 50px;
-    transition: transform 0.4s;;
-    text-shadow: 2px 2px 0px #F2F2F2;
-    margin-bottom: 0px;
 
-    width:auto;
+    transition: transform 0.4s;;
+    text-shadow: 1px 1px 0px white;
+    margin-bottom: 0px;
+    background-color: #151515;
+    border-radius: 5px;
+
+    justify-content: center;
+    width:500px;
+    margin:auto;
+    margin-top: 35px;
     z-index: 1;
+
 
 }
 
@@ -39,10 +46,10 @@ p {
 .flexbox div {
     margin: 20px;
     padding: 20px;
-    border: 1px solid #A63D40;
+    border: 1px solid #9D1419;
     border-radius: 10px;
     background-color: #F2F2F2;
-    box-shadow: 5px 5px 5px #A63D40;
+    box-shadow: 5px 5px 5px #9D1419;
     width: 520px;
     transition: scale 0.4s;;
 }
@@ -118,8 +125,8 @@ body {
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    width: 50px; /* Set the width */
-    height: 50px; /* Set the height */
+    width: 60px; /* Set the width */
+    height: 60px; /* Set the height */
     margin: 35px;
     margin-right: 10px;
     margin-bottom: 5px;
@@ -127,12 +134,25 @@ body {
 }
 
 .profile-btn:hover {
-    background: #f3f4f6;
+    background: #560D10;
     transform: scale(1.05);
+
 }
 
 .profile-btn svg {
-    color: #A63D40;  /* Matches your existing color scheme */
+    color: #9D1419;
+
+    /* Matches your existing color scheme */
+
+
+}
+.profile-btn svg:hover {
+    color: #F2F2F2;
+
+    /* Matches your existing color scheme */
+}
+#profile-btn svg.hovered {
+    fill: #F2F2F2; /* Change color when class is added */
 }
 
 /* Dropdown menu styling */
@@ -312,8 +332,8 @@ input:checked + .slider:before {
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     margin: 35px;
     margin-left: 10px;
     margin-bottom: 5px;
@@ -321,12 +341,17 @@ input:checked + .slider:before {
 }
 
 .home-btn:hover {
-    background: #f3f4f6;
+    background: #560D10;
     transform: scale(1.05);
+
 }
 
 .home-btn svg {
     color: #A63D40;
+}
+
+.home-btn svg:hover {
+    color: #F2F2F2;
 }
 
 .profile-container {
