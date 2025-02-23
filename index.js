@@ -189,5 +189,5 @@ function updateProfile(name, position, rank) {
 }
 
 // Example usage:
-updateProfile('LeBron James', 'SF', 'All-Star');
+updateProfile('LeBron James', 'SF', 'Gold');
 
