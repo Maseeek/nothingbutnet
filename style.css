@@ -134,7 +134,7 @@ body {
 }
 
 .profile-btn:hover {
-    background: #560D10;
+    background: #560D10 !important;
     transform: scale(1.05);
 
 }
@@ -147,13 +147,11 @@ body {
 
 }
 .profile-btn svg:hover {
-    color: #F2F2F2;
+    color: #F2F2F2 !important;
 
     /* Matches your existing color scheme */
 }
-#profile-btn svg.hovered {
-    fill: #F2F2F2; /* Change color when class is added */
-}
+
 
 /* Dropdown menu styling */
 .dropdown-menu {
@@ -341,7 +339,7 @@ input:checked + .slider:before {
 }
 
 .home-btn:hover {
-    background: #560D10;
+    background: #560D10 !important;
     transform: scale(1.05);
 
 }
@@ -351,7 +349,7 @@ input:checked + .slider:before {
 }
 
 .home-btn svg:hover {
-    color: #F2F2F2;
+    color: #F2F2F2; !important;
 }
 
 .profile-container {

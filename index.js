@@ -71,58 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    // settings.js
-    document.addEventListener('DOMContentLoaded', function() {
-        // Profile dropdown functionality
-        const profileButton = document.getElementById('profile-button');
-        const dropdownMenu = document.getElementById('dropdown-menu');
 
-        profileButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('hidden');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!dropdownMenu.contains(e.target) && !profileButton.contains(e.target)) {
-                dropdownMenu.classList.add('hidden');
-            }
-        });
-
-        dropdownMenu.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-
-        // Settings functionality
-        const saveButton = document.querySelector('.save-button');
-        if (saveButton) {
-            saveButton.addEventListener('click', function() {
-                // Here you would typically save the settings to your backend
-                alert('Settings saved successfully!');
-            });
-        }
-
-        // Add event listeners for switches
-        const switches = document.querySelectorAll('.switch input');
-        if (switches) {
-            switches.forEach(switchEl => {
-                switchEl.addEventListener('change', function() {
-                    console.log(this.checked ? 'Enabled' : 'Disabled');
-                    // Here you can add specific functionality for each switch
-                });
-            });
-        }
-
-        // Add event listeners for selects
-        const selects = document.querySelectorAll('.settings-select');
-        if (selects) {
-            selects.forEach(select => {
-                select.addEventListener('change', function() {
-                    console.log('Selected:', this.value);
-                    // Here you can add specific functionality for each select
-                });
-            });
-        }
-    });
     document.getElementById('dark-mode-toggle').addEventListener('change', function() {
         if (this.checked) {
             console.log('Dark mode enabled');
@@ -139,6 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function toggleDarkMode(enabled){
     if(enabled){
+        // $(".settings-section").forEach(section => {section.style.backgroundColor = "#333333"}); // this doesn't work as it is a select all thing
+
         document.querySelectorAll('.settings-section').forEach(section => {
             section.style.backgroundColor = '#333333';
         });
@@ -157,8 +108,10 @@ function toggleDarkMode(enabled){
         document.querySelectorAll('.settings-select').forEach(header => {
             header.style.color = '#f9f9f9';
         });
-        document.querySelector('.home-btn').style.backgroundColor = '#333333';
-        document.querySelector('.profile-btn').style.backgroundColor = '#333333';
+        // document.querySelector('.home-btn').style.backgroundColor = '#333333';
+        // document.querySelector('.profile-btn').style.backgroundColor = '#333333';
+        $(".home-btn").css("background-color", "#333333");
+        $(".profile-btn").css("background-color", "#333333");
 
 
         } else {
@@ -177,8 +130,10 @@ function toggleDarkMode(enabled){
         document.querySelectorAll('.settings-select').forEach(header => {
             header.style.color = '#333333';
         });
-        document.querySelector('.home-btn').style.backgroundColor = '#f9f9f9';
-        document.querySelector('.profile-btn').style.backgroundColor = '#f9f9f9';
+        $('.home-btn').css('background-color', '#f9f9f9');
+        // document.querySelector('.home-btn').style.backgroundColor = '#f9f9f9';
+        // document.querySelector('.profile-btn').style.backgroundColor = '#f9f9f9';
+        $(".profile-btn").css("background-color", "#f9f9f9");
     }
 }
 
@@ -187,18 +142,6 @@ function updateProfile(name, position, rank) {
     document.getElementById('player-position').textContent = position;
     document.getElementById('player-rank').textContent = rank;
 }
-document.addEventListener('DOMContentLoaded', function() {
-    const profileBtn = document.getElementById('profile-btn');
-    const profileSvg = profileBtn.querySelector('svg');
-
-    profileBtn.addEventListener('mouseover', function() {
-        profileSvg.classList.add('hovered'); // Add class on hover
-    });
-
-    profileBtn.addEventListener('mouseout', function() {
-        profileSvg.classList.remove('hovered'); // Remove class when not hovered
-    });
-});
 
 
 // Example usage:
