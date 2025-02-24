@@ -1,5 +1,3 @@
-console.log('Happy developing ✨');
-
 function GetFile(callbackFunction) {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
@@ -43,10 +41,10 @@ dropdownMenu.addEventListener('click', (e) => {
 });
 
 // Settings page functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const saveButton = document.querySelector('.save-button');
     if (saveButton) {
-        saveButton.addEventListener('click', function() {
+        saveButton.addEventListener('click', function () {
             // Here you would typically save the settings to your backend
             alert('Settings saved successfully!');
         });
@@ -56,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const switches = document.querySelectorAll('.switch input');
     if (switches) {
         switches.forEach(switchElement => {
-            switchElement.addEventListener('change', function() {
+            switchElement.addEventListener('change', function () {
                 console.log(this.checked ? 'Enabled' : 'Disabled');
             });
         });
@@ -66,30 +64,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const selects = document.querySelectorAll('.settings-select');
     if (selects) {
         selects.forEach(select => {
-            select.addEventListener('change', function() {
+            select.addEventListener('change', function () {
                 console.log('Selected:', this.value);
             });
         });
     }
 
-    document.getElementById('dark-mode-toggle').addEventListener('change', function() {
-        if (this.checked) {
-            console.log('Dark mode enabled');
-            toggleDarkMode(true);
-            // Add your dark mode enabling logic here
-        } else {
-            console.log('Dark mode disabled');
-            toggleDarkMode(false);
-            // Add your dark mode disabling logic here
-        }
-    });
+    if(document.getElementById('dark-mode-toggle') != null) {
+        document.getElementById('dark-mode-toggle').addEventListener('change', function () {
+            if (this.checked) {
+                console.log('Dark mode enabled');
+                toggleDarkMode(true);
+                // Add your dark mode enabling logic here
+            } else {
+                console.log('Dark mode disabled');
+                toggleDarkMode(false);
+                // Add your dark mode disabling logic here
+            }
+        });
+    }
 });
 
 
-function toggleDarkMode(enabled){
-    if(enabled){
+function toggleDarkMode(enabled) {
+    console.log('Dark mode enabled: ' + enabled);
+    if (enabled) {
         // $(".settings-section").forEach(section => {section.style.backgroundColor = "#333333"}); // this doesn't work as it is a select all thing
-
+        if ($("#dark-mode-toggle") != null) {
+            $("#dark-mode-toggle").prop("checked", true);
+        }
         document.querySelectorAll('.settings-section').forEach(section => {
             section.style.backgroundColor = '#333333';
         });
@@ -114,7 +117,7 @@ function toggleDarkMode(enabled){
         $(".profile-btn").css("background-color", "#333333");
 
 
-        } else {
+    } else {
         document.querySelectorAll('.settings-section').forEach(section => {
             section.style.backgroundColor = '#f9f9f9';
         });
@@ -137,6 +140,19 @@ function toggleDarkMode(enabled){
     }
 }
 
+function toggleDarkModeHome(enabled) {
+    console.log('Dark mode enabled: ' + enabled);
+    if (enabled) {
+        $(".home-btn").css("background-color", "#333333");
+        $(".profile-btn").css("background-color", "#333333");
+        console.log($(".flexbox div")); // Add this line to check if elements are selected
+        $(".flexbox div").css("background-color", "#333333");
+    } else {
+        $(".home-btn").css("background-color", "#f9f9f9");
+        $(".profile-btn").css("background-color", "#f9f9f9");
+    }
+}
+
 function updateProfile(name, position, rank) {
     document.getElementById('player-name').textContent = name;
     document.getElementById('player-position').textContent = position;
@@ -144,6 +160,16 @@ function updateProfile(name, position, rank) {
 }
 
 
+$(".save-button").click(function () {
+    const darkMode = $("#dark-mode-toggle").is(":checked");
+    sessionStorage.setItem("darkMode", darkMode);
+});
+
+toggleDarkMode(sessionStorage.getItem("darkMode") === "true");
+
+$(".home-btn").click(function () {
+    toggleDarkModeHome(sessionStorage.getItem("darkMode") === "true");
+});
 // Example usage:
-updateProfile('LeBron James', 'SF', 'Gold');
+// updateProfile('LeBron James', 'SF', 'Gold');
 
