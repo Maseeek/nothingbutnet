@@ -78,6 +78,11 @@ p {
 
 }
 
+upload-button{
+    margin:auto;
+
+}
+
 .upload-box:hover{
     scale:1.01;
     transition-duration: 0.2s;
