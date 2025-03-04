@@ -51,6 +51,7 @@ p {
     background-color: #F2F2F2;
     box-shadow: 5px 5px 5px #9D1419;
     width: 520px;
+    height: 250px;
     transition: scale 0.4s;;
 }
 
@@ -69,19 +70,16 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 6px 0;
+    padding: 6px;
     flex-direction: row;
     Border: 2px darkred solid;
     width: 350px;
     margin: auto;
     background-color: rgba(242, 242, 242, 0.5);
-
 }
 
-upload-button{
-    margin:auto;
 
-}
+
 
 .upload-box:hover{
     scale:1.01;
