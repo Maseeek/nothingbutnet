@@ -7,6 +7,9 @@ import json
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
+
+# PYTHON PROGRAM TO PROCESS VIDEO AND DETERMINE BASKETBALL OUTCOMES
+
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
