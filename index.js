@@ -148,8 +148,29 @@ function toggleDarkModeHome(enabled) {
     if (enabled) {
         $(".home-btn").css("background-color", "#333333");
         $(".profile-btn").css("background-color", "#333333");
-        console.log($(".flexbox div")); // Add this line to check if elements are selected
         $(".flexbox div").css("background-color", "#333333");
+        $(".flexbox div").css("color", "aliceblue");
+        $(".flexbox div p").css("color", "aliceblue");
+        $(".dropdown-menu").css("background-color", "#333333");
+        $(".dropdown-item").css("color", "aliceblue");
+        $(".upload-box").css("background-color", "rgba(0, 0, 0, 0.5)");
+        $(".upload-box > div > button").css("color", "aliceblue");
+        $(".upload-box > div > button").css("background-color", "black");
+        $(".upload-box > div > p").css("color", "aliceblue");
+        $(".upload-box > div > p").css("text-shadow", "#333333 2px 2px 2px");
+$(".upload-box div button").on("mouseover", function () {
+    $(".upload-box > div > button").css({
+        "background-color": "darkred",
+        "transition": "background-color 0.2s"
+    });
+});
+$(".upload-box div button").on("mouseout", function () {
+    $(".upload-box > div > button").css({
+        "background-color": "black",
+        "transition": "background-color 0.2s"
+    });
+});
+
     } else {
         $(".home-btn").css("background-color", "#f9f9f9");
         $(".profile-btn").css("background-color", "#f9f9f9");
@@ -170,9 +191,7 @@ $(".save-button").click(function () {
 
 toggleDarkMode(sessionStorage.getItem("darkMode") === "true");
 
-$(".home-btn").click(function () {
-    toggleDarkModeHome(sessionStorage.getItem("darkMode") === "true");
-});
+$(".home-btn").click(toggleDarkModeHome(sessionStorage.getItem("darkMode") === "true"));
 // Example usage:
 // updateProfile('LeBron James', 'SF', 'Gold');
 
@@ -214,13 +233,13 @@ function showHoopSelectionDialog(file) {
             <p>Please enter the coordinates of the hoop:</p>
             <div class="input-group">
                 <label>Left Side of Hoop (X, Y):</label>
-                <input type="number" id="left-x" placeholder="X" value="200">
-                <input type="number" id="left-y" placeholder="Y" value="150">
+                <input type="number" id="left-x" placeholder="X" value="182">
+                <input type="number" id="left-y" placeholder="Y" value="346">
             </div>
             <div class="input-group">
                 <label>Right Side of Hoop (X, Y):</label>
-                <input type="number" id="right-x" placeholder="X" value="300">
-                <input type="number" id="right-y" placeholder="Y" value="150">
+                <input type="number" id="right-x" placeholder="X" value="297">
+                <input type="number" id="right-y" placeholder="Y" value="359">
             </div>
             <button id="submit-coords">Analyze Video</button>
             <button id="cancel-analysis">Cancel</button>
