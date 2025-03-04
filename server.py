@@ -18,11 +18,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Import your existing functions from main.py
 dist = lambda x1, y1, x2, y2: (x1-x2)**2 + (y1-y2)**2
-PUMPKIN = (33, 121, 250)
-CELADON = (187, 229, 169)
-VANILLA = (177, 246, 252)
-FELDGRAU = (59, 75, 63)
-GREEN = (63, 99, 68)
 
 def findBall(frame, prevCircle, radius):
     CONSTANT = 1.2
