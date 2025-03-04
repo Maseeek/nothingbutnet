@@ -87,7 +87,7 @@ def calculateAverageAngle(shotAngles, shots):
     except:
         return 0, 0, 0
 
-def analyze_video(videoPath, hoopLeft, hoopRight):
+def analyze_video(videoPath, hoopLeft, hoopRight, max_frames):
     # Initialize variables
     shots = []
     shotAngles = []
@@ -108,7 +108,7 @@ def analyze_video(videoPath, hoopLeft, hoopRight):
     shotInProgress = False
 
     frame_count = 0
-    max_frames = 5000  # Limit frames to process for web version
+#     max_frames = 5000  # Limit frames to process for web version
 
     while cap.isOpened() and frame_count < max_frames:
         ret, frame = cap.read()
