@@ -421,17 +421,18 @@ function displayFGResults(results) {
             .stats-container {
                 display: flex;
                 flex-wrap: wrap;
-                justify-content: space-between;
+                justify-content: center;
                 margin-bottom: 20px;
             }
             .stat-box {
                 background-color: white;
-                padding: 15px;
+                padding: 30px;
                 border-radius: 5px;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.1);
                 margin-bottom: 15px;
-                width: calc(33% - 10px);
+                width: calc(50% - 20px);
                 text-align: center;
+                margin: 10px;
             }
             .stat-box h3 {
                 margin-top: 0;
@@ -485,6 +486,11 @@ function displayFGResults(results) {
                 <h3>Field Goal %</h3>
                 <div class="value">${results.fg_percentage}%</div>
                 <div>${results.makes}/${results.total_shots}</div>
+            </div>
+            <div class="stat-box">
+                <h3>Longest Streak</h3>
+                <div class="value">${results.longest_streak}</div>
+                <div>consecutive makes</div>
             </div>
         </div>
     `;
