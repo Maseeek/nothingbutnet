@@ -44,8 +44,24 @@ dropdownMenu.addEventListener('click', (e) => {
 });
 
 function toggleAngle(enabled) {
-
+    console.log('Angle toggle enabled: ' + enabled);
+    if (enabled) {
+        if (document.getElementById('angle-toggle') != null) {
+            // Add your angle toggle enabling logic here
+            document.getElementById('angle-toggle').checked = true;
+        }
+        sessionStorage.setItem("showAngle", true);
+    } else {
+        // Add your angle toggle disabling logic here
+        if (document.getElementById('angle-toggle') != null) {
+            document.getElementById('angle-toggle').checked = false;
+        }
+        sessionStorage.setItem("showAngle", false);
+    }
 }
+
+
+
 
 // Settings page functionality
 document.addEventListener('DOMContentLoaded', function () {
@@ -77,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    if(document.getElementById('dark-mode-toggle') != null) {
+    if (document.getElementById('dark-mode-toggle') != null) {
         document.getElementById('dark-mode-toggle').addEventListener('change', function () {
             if (this.checked) {
                 console.log('Dark mode enabled');
@@ -91,9 +107,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    if($("#angle-toggle") != null){
-        $("#angle-toggle").on("change", function() {
-            if(this.checked) {
+    if ($("#angle-toggle") != null) {
+        $("#angle-toggle").on("change", function () {
+            if (this.checked) {
                 console.log("Angle toggle enabled");
                 // Add your angle toggle enabling logic here
                 toggleAngle(true);
@@ -176,18 +192,18 @@ function toggleDarkModeHome(enabled) {
         $(".upload-box > div > button").css("background-color", "black");
         $(".upload-box > div > p").css("color", "aliceblue");
         $(".upload-box > div > p").css("text-shadow", "#333333 2px 2px 2px");
-$(".upload-box div button").on("mouseover", function () {
-    $(".upload-box > div > button").css({
-        "background-color": "darkred",
-        "transition": "background-color 0.2s"
-    });
-});
-$(".upload-box div button").on("mouseout", function () {
-    $(".upload-box > div > button").css({
-        "background-color": "black",
-        "transition": "background-color 0.2s"
-    });
-});
+        $(".upload-box div button").on("mouseover", function () {
+            $(".upload-box > div > button").css({
+                "background-color": "darkred",
+                "transition": "background-color 0.2s"
+            });
+        });
+        $(".upload-box div button").on("mouseout", function () {
+            $(".upload-box > div > button").css({
+                "background-color": "black",
+                "transition": "background-color 0.2s"
+            });
+        });
 
     } else {
         $(".home-btn").css("background-color", "#f9f9f9");
@@ -207,16 +223,16 @@ $(".save-button").click(function () {
     sessionStorage.setItem("darkMode", darkMode);
     const showAngle = $("#angle-toggle").is(":checked");
     sessionStorage.setItem("showAngle", showAngle);
+    console.log("Angle toggle: " + showAngle + " stored in session storage.");
 });
 
 toggleDarkMode(sessionStorage.getItem("darkMode") === "true");
+toggleAngle(sessionStorage.getItem("showAngle") === "true");
 
 $(".home-btn").click(toggleDarkModeHome(sessionStorage.getItem("darkMode") === "true"));
 
 // Example usage:
 // updateProfile('LeBron James', 'SF', 'Gold');
-
-
 
 
 // CLAUDE
@@ -358,10 +374,11 @@ function sendVideoForAnalysis(file, hoopLeft, hoopRight) {
                 document.getElementById("upload-button").style.backgroundColor = "#149D2F";
 
                 // Display the results
-                if(sessionStorage.getItem("showAngle") === "true"){
-                displayAnalysisResults(data.data);}
-                else{
+                if (sessionStorage.getItem("showAngle") === "false") {
                     displayFGResults(data.data);
+                } else {
+
+                    displayAnalysisResults(data.data);
                 }
             } else {
                 document.getElementById("upload-button").innerHTML = "ERROR";
@@ -473,7 +490,7 @@ function displayFGResults(results) {
     `;
 
     // Scroll to results
-    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    resultsDiv.scrollIntoView({behavior: 'smooth'});
 }
 
 
@@ -600,13 +617,14 @@ function displayAnalysisResults(results) {
     `;
 
     // Scroll to results
-    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    resultsDiv.scrollIntoView({behavior: 'smooth'});
 }
 
 // Update your button event listener to use the new function
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const uploadButton = document.getElementById('upload-button');
     if (uploadButton) {
+        console.log("Showing angle: " +( sessionStorage.getItem("showAngle") === "true"));
         uploadButton.addEventListener('click', GetFileAndAnalyze);
     }
 });
