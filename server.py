@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 
 # PYTHON PROGRAM TO PROCESS VIDEO AND DETERMINE BASKETBALL OUTCOMES
-
+MAX_FRAMES = 1750
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
@@ -108,7 +108,7 @@ def analyze_video(videoPath, hoopLeft, hoopRight, max_frames):
     shotInProgress = False
 
     frame_count = 0
-#     max_frames = 5000  # Limit frames to process for web version
+    #max_frames = 5000  # Limit frames to process for web version
 
     while cap.isOpened() and frame_count < max_frames:
         ret, frame = cap.read()
@@ -200,7 +200,7 @@ def upload_and_analyze():
 
     try:
         # Run the analysis
-        result = analyze_video(filepath, hoopLeft, hoopRight)
+        result = analyze_video(filepath, hoopLeft, hoopRight, MAX_FRAMES)
 
         # Clean up the file (optional)
         # os.remove(filepath)
