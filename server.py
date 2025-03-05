@@ -88,17 +88,13 @@ def calculateAverageAngle(shotAngles, shots):
         return 0, 0, 0
 
 def analyze_video(videoPath, hoopLeft, hoopRight, max_frames):
-    # Initialize variables
     shots = []
     shotAngles = []
     posListX = []
     posListY = []
     cap = cv2.VideoCapture(videoPath)
 
-    # Use provided hoop coordinates instead of asking for clicks
     ballRadius = 0.264 * math.sqrt(dist(hoopLeft[0], hoopLeft[1], hoopRight[0], hoopRight[1]))
-    hoopMaxHeight = min(hoopLeft[1], hoopRight[1])
-    hoopAverageHeight = (hoopLeft[1] + hoopRight[1]) / 2
     hoopMinHeight = max(hoopLeft[1], hoopRight[1])
     fga = 0
     fgm = 0
@@ -108,7 +104,6 @@ def analyze_video(videoPath, hoopLeft, hoopRight, max_frames):
     shotInProgress = False
 
     frame_count = 0
-    #max_frames = 5000  # Limit frames to process for web version
 
     while cap.isOpened() and frame_count < max_frames:
         ret, frame = cap.read()
@@ -116,6 +111,9 @@ def analyze_video(videoPath, hoopLeft, hoopRight, max_frames):
             break
 
         frame_count += 1
+        if frame_count % 2 != 0:  # Skip every other frame
+            continue
+
         basketball = findBall(frame, prevCircle, ballRadius)
 
         if basketball is not None:
@@ -154,7 +152,6 @@ def analyze_video(videoPath, hoopLeft, hoopRight, max_frames):
 
     cap.release()
 
-    # Calculate statistics
     makes = shots.count(1) if shots else 0
     misses = shots.count(0) if shots else 0
     fg_percentage = 100 * makes / len(shots) if shots else 0
@@ -175,7 +172,6 @@ def analyze_video(videoPath, hoopLeft, hoopRight, max_frames):
     }
 
     return result
-
 @app.route('/upload-and-analyze', methods=['POST'])
 def upload_and_analyze():
     if 'video' not in request.files:
