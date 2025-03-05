@@ -358,7 +358,11 @@ function sendVideoForAnalysis(file, hoopLeft, hoopRight) {
                 document.getElementById("upload-button").style.backgroundColor = "#149D2F";
 
                 // Display the results
-                displayAnalysisResults(data.data);
+                if(sessionStorage.getItem("showAngle") === "true"){
+                displayAnalysisResults(data.data);}
+                else{
+                    displayFGResults(data.data);
+                }
             } else {
                 document.getElementById("upload-button").innerHTML = "ERROR";
                 document.getElementById("upload-button").style.backgroundColor = "#FF0000";
