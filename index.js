@@ -43,6 +43,10 @@ dropdownMenu.addEventListener('click', (e) => {
     e.stopPropagation();
 });
 
+function toggleAngle(enabled) {
+
+}
+
 // Settings page functionality
 document.addEventListener('DOMContentLoaded', function () {
     const saveButton = document.querySelector('.save-button');
@@ -83,6 +87,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log('Dark mode disabled');
                 toggleDarkMode(false);
                 // Add your dark mode disabling logic here
+            }
+        });
+    }
+
+    if($("#angle-toggle") != null){
+        $("#angle-toggle").on("change", function() {
+            if(this.checked) {
+                console.log("Angle toggle enabled");
+                // Add your angle toggle enabling logic here
+                toggleAngle(true);
+            } else {
+                console.log("Angle toggle disabled");
+                // Add your angle toggle disabling logic here
+                toggleAngle(false);
             }
         });
     }
@@ -187,11 +205,14 @@ function updateProfile(name, position, rank) {
 $(".save-button").click(function () {
     const darkMode = $("#dark-mode-toggle").is(":checked");
     sessionStorage.setItem("darkMode", darkMode);
+    const showAngle = $("#angle-toggle").is(":checked");
+    sessionStorage.setItem("showAngle", showAngle);
 });
 
 toggleDarkMode(sessionStorage.getItem("darkMode") === "true");
 
 $(".home-btn").click(toggleDarkModeHome(sessionStorage.getItem("darkMode") === "true"));
+
 // Example usage:
 // updateProfile('LeBron James', 'SF', 'Gold');
 
@@ -352,6 +373,105 @@ function sendVideoForAnalysis(file, hoopLeft, hoopRight) {
             alert('Error processing video: ' + error.message);
         });
 }
+
+function displayFGResults(results) {
+    // Create a results container if it doesn't exist
+    let resultsDiv = document.getElementById('analysis-results');
+    if (!resultsDiv) {
+        resultsDiv = document.createElement('div');
+        resultsDiv.id = 'analysis-results';
+        resultsDiv.className = 'analysis-results';
+        document.body.appendChild(resultsDiv);
+
+        // Add styling for the results
+        const style = document.createElement('style');
+        style.textContent = `
+            .analysis-results {
+                margin-top: 20px;
+                padding: 20px;
+                background-color: #f5f5f5;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+            .stats-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+            .stat-box {
+                background-color: white;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                margin-bottom: 15px;
+                width: calc(33% - 10px);
+                text-align: center;
+            }
+            .stat-box h3 {
+                margin-top: 0;
+                color: #333;
+            }
+            .stat-box .value {
+                font-size: 24px;
+                font-weight: bold;
+                color: #A63D40;
+            }
+            .shot-sequence {
+                display: flex;
+                justify-content: center;
+                padding: 10px 0;
+                margin-bottom: 20px;
+            }
+            .shot {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                margin-right: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: bold;
+            }
+            .make {
+                background-color: #4CAF50;
+            }
+            .miss {
+                background-color: #f44336;
+            }
+            h2 {
+                color: #A63D40;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Fill the results container with the analysis data
+    resultsDiv.innerHTML = `
+        <h2>Shot Analysis Results</h2>
+        <div class="shot-sequence">
+            ${results.shots_results.map((shot, index) =>
+        `<div class="shot ${shot === 1 ? 'make' : 'miss'}">${index + 1}</div>`
+    ).join('')}
+        </div>
+        <div class="stats-container">
+            <div class="stat-box">
+                <h3>Field Goal %</h3>
+                <div class="value">${results.fg_percentage}%</div>
+                <div>${results.makes}/${results.total_shots}</div>
+            </div>
+        </div>
+    `;
+
+    // Scroll to results
+    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+}
+
 
 function displayAnalysisResults(results) {
     // Create a results container if it doesn't exist
