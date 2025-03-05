@@ -6,12 +6,12 @@ from server import analyze_video
 class TestAnalyzeVideoPerformance(unittest.TestCase):
 
     def setUp(self):
-        self.test_video_path = r"E:\Youtube\tiktoks\footage\10 freethrows\flipped footage 10 freethrows.mov"
-        self.hoop_left = [100, 200]
-        self.hoop_right = [300, 200]
+        self.test_video_path = r"C:\Users\masee\OneDrive - Loughborough University\PERSONAL\flipped footage 10 freethrows.mov"
+        self.hoop_left = [182, 346]
+        self.hoop_right = [297, 359]
 
     def test_analyze_video_performance(self):
-        max_frames_values = [100, 500]#, 1000]#, 5000]
+        max_frames_values = [100, 500, 1000, 2000]
         for max_frames in max_frames_values:
             start_time = time.time()
             result = analyze_video(self.test_video_path, self.hoop_left, self.hoop_right, max_frames=max_frames)
