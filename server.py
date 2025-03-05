@@ -87,7 +87,7 @@ def calculateAverageAngle(shotAngles, shots):
     except:
         return 0, 0, 0
 
-def analyze_video(videoPath, hoopLeft, hoopRight, max_frames):
+def analyze_video(videoPath, hoopLeft, hoopRight, max_frames, accuracy=0.15):
     shots = []
     shotAngles = []
     posListX = []
@@ -111,7 +111,7 @@ def analyze_video(videoPath, hoopLeft, hoopRight, max_frames):
             break
 
         frame_count += 1
-        if frame_count % 2 != 0:  # Skip every other frame
+        if frame_count % int(1/accuracy) != 0:  # Skip every other frame
             continue
 
         basketball = findBall(frame, prevCircle, ballRadius)
