@@ -189,6 +189,10 @@ def upload_and_analyze():
     except:
         return jsonify({'success': False, 'error': 'Invalid hoop coordinates'}), 400
 
+    # Get showAngle status from request
+    show_angle = request.form.get('showAngle', 'false').lower() == 'true'
+    accuracy = 0.5 if show_angle else 0.15
+
     # Save the video file
     filename = secure_filename(video_file.filename)
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -196,7 +200,7 @@ def upload_and_analyze():
 
     try:
         # Run the analysis
-        result = analyze_video(filepath, hoopLeft, hoopRight, MAX_FRAMES)
+        result = analyze_video(filepath, hoopLeft, hoopRight, MAX_FRAMES, accuracy)
 
         # Clean up the file (optional)
         # os.remove(filepath)

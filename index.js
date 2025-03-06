@@ -239,162 +239,155 @@ $(".home-btn").click(toggleDarkModeHome(sessionStorage.getItem("darkMode") === "
 
 // Modified version of your GetFile function to send the file to Python
 function GetFileAndAnalyze() {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'video/*';
+    const showAngle = sessionStorage.getItem("showAngle") === "true";
+    const fileInput = $('<input type="file" accept="video/*">');
 
-    fileInput.onchange = (event) => {
+    fileInput.on('change', (event) => {
         const file = event.target.files[0];
         if (file && file.type.includes('video')) {
             console.log('File selected:', file.name);
 
             // Change upload button status
-            document.getElementById("upload-button").innerHTML = "PROCESSING...";
-            document.getElementById("upload-button").style.backgroundColor = "#FFA500";
+            $("#upload-button").text("PROCESSING...").css("background-color", "#FFA500");
 
             // We need to get hoop coordinates before sending the video
-            // For demonstration, we'll use a modal dialog to get them
             showHoopSelectionDialog(file);
         }
-    };
+    });
 
     fileInput.click();
 }
-
 function showHoopSelectionDialog(file) {
-    const dialog = document.createElement('div');
-    dialog.className = 'hoop-selection-dialog';
-    dialog.innerHTML = `
-        <div class="dialog-content">
-            <h3>Set Hoop Coordinates</h3>
-            <p>Please enter the coordinates of the hoop:</p>
-            <div class="input-group">
-                <label>Left Side of Hoop (X, Y):</label>
-                <input type="number" id="left-x" placeholder="X" value="182">
-                <input type="number" id="left-y" placeholder="Y" value="346">
+    const dialog = $(`
+        <div class="hoop-selection-dialog">
+            <div class="dialog-content">
+                <h3>Set Hoop Coordinates</h3>
+                <p>Please enter the coordinates of the hoop:</p>
+                <div class="input-group">
+                    <label>Left Side of Hoop (X, Y):</label>
+                    <input type="number" id="left-x" placeholder="X" value="182">
+                    <input type="number" id="left-y" placeholder="Y" value="346">
+                </div>
+                <div class="input-group">
+                    <label>Right Side of Hoop (X, Y):</label>
+                    <input type="number" id="right-x" placeholder="X" value="297">
+                    <input type="number" id="right-y" placeholder="Y" value="359">
+                </div>
+                <button id="submit-coords">Analyze Video</button>
+                <button id="cancel-analysis">Cancel</button>
             </div>
-            <div class="input-group">
-                <label>Right Side of Hoop (X, Y):</label>
-                <input type="number" id="right-x" placeholder="X" value="297">
-                <input type="number" id="right-y" placeholder="Y" value="359">
-            </div>
-            <button id="submit-coords">Analyze Video</button>
-            <button id="cancel-analysis">Cancel</button>
         </div>
-    `;
+    `);
 
-    document.body.appendChild(dialog);
+    $('body').append(dialog);
 
     // Add styling to the dialog
-    const style = document.createElement('style');
-    style.textContent = `
-        .hoop-selection-dialog {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .dialog-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 400px;
-            max-width: 90%;
-        }
-        .input-group {
-            margin-bottom: 15px;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .input-group input {
-            width: 60px;
-            margin-right: 10px;
-            padding: 5px;
-        }
-        button {
-            padding: 8px 15px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-        #submit-coords {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-        }
-        #cancel-analysis {
-            background-color: #f44336;
-            color: white;
-            border: none;
-        }
-    `;
-    document.head.appendChild(style);
+    const style = $(`
+        <style>
+            .hoop-selection-dialog {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+            .dialog-content {
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                width: 400px;
+                max-width: 90%;
+            }
+            .input-group {
+                margin-bottom: 15px;
+            }
+            .input-group label {
+                display: block;
+                margin-bottom: 5px;
+            }
+            .input-group input {
+                width: 60px;
+                margin-right: 10px;
+                padding: 5px;
+            }
+            button {
+                padding: 8px 15px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            #submit-coords {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+            }
+            #cancel-analysis {
+                background-color: #f44336;
+                color: white;
+                border: none;
+            }
+        </style>
+    `);
+    $('head').append(style);
 
     // Handle dialog buttons
-    document.getElementById('submit-coords').addEventListener('click', () => {
-        const leftX = parseInt(document.getElementById('left-x').value) || 200;
-        const leftY = parseInt(document.getElementById('left-y').value) || 150;
-        const rightX = parseInt(document.getElementById('right-x').value) || 300;
-        const rightY = parseInt(document.getElementById('right-y').value) || 150;
+    $('#submit-coords').on('click', () => {
+        const leftX = parseInt($('#left-x').val()) || 200;
+        const leftY = parseInt($('#left-y').val()) || 150;
+        const rightX = parseInt($('#right-x').val()) || 300;
+        const rightY = parseInt($('#right-y').val()) || 150;
 
         sendVideoForAnalysis(file, [leftX, leftY], [rightX, rightY]);
         dialog.remove();
         style.remove();
     });
 
-    document.getElementById('cancel-analysis').addEventListener('click', () => {
-        document.getElementById("upload-button").innerHTML = "UPLOAD";
-        document.getElementById("upload-button").style.backgroundColor = "#A63D40";
+    $('#cancel-analysis').on('click', () => {
+        $("#upload-button").text("UPLOAD").css("background-color", "#A63D40");
         dialog.remove();
         style.remove();
     });
 }
-
 function sendVideoForAnalysis(file, hoopLeft, hoopRight) {
     const formData = new FormData();
     formData.append('video', file);
     formData.append('hoopLeft', JSON.stringify(hoopLeft));
     formData.append('hoopRight', JSON.stringify(hoopRight));
+    formData.append('showAngle', sessionStorage.getItem("showAngle") === "true");
 
-    fetch('http://localhost:5000/upload-and-analyze', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
+    $.ajax({
+        url: 'http://localhost:5000/upload-and-analyze',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: (data) => {
             if (data.success) {
-                document.getElementById("upload-button").innerHTML = "COMPLETED";
-                document.getElementById("upload-button").style.backgroundColor = "#149D2F";
+                $("#upload-button").text("COMPLETED").css("background-color", "#149D2F");
 
                 // Display the results
                 if (sessionStorage.getItem("showAngle") === "false") {
                     displayFGResults(data.data);
                 } else {
-
                     displayAnalysisResults(data.data);
                 }
             } else {
-                document.getElementById("upload-button").innerHTML = "ERROR";
-                document.getElementById("upload-button").style.backgroundColor = "#FF0000";
+                $("#upload-button").text("ERROR").css("background-color", "#FF0000");
                 console.error('Analysis failed:', data.error);
                 alert('Analysis failed: ' + data.error);
             }
-        })
-        .catch(error => {
-            document.getElementById("upload-button").innerHTML = "ERROR";
-            document.getElementById("upload-button").style.backgroundColor = "#FF0000";
+        },
+        error: (error) => {
+            $("#upload-button").text("ERROR").css("background-color", "#FF0000");
             console.error('Error:', error);
             alert('Error processing video: ' + error.message);
-        });
+        }
+    });
 }
-
 function displayFGResults(results) {
     // Create a results container if it doesn't exist
     let resultsDiv = document.getElementById('analysis-results');
