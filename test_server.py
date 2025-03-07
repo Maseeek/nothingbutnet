@@ -33,3 +33,10 @@ class TestAnalyzeVideoPerformance(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+    #Accuracy: 0.15, Duration: 9.73 seconds, Total shots: 7, Makes: 4, Misses: 3, FG percentage: 57.14%, Angle: 6.07 #incorrect
+    #Accuracy: 0.15, Duration: 12.00 seconds, Total shots: 7, Makes: 3, Misses: 4, FG percentage: 42.86%, Angle: 14.61 initial
+    #Accuracy: 0.15, Duration: 16.36 seconds, Total shots: 7, Makes: 3, Misses: 4, FG percentage: 42.86%, Angle: 21.07
+    #Accuracy: 0.15, Duration: 14.60 seconds, Total shots: 7, Makes: 3, Misses: 4, FG percentage: 42.86%, Angle: 14.61 initial
+    #Accuracy: 0.15, Duration: 15.14 seconds, Total shots: 7, Makes: 3, Misses: 4, FG percentage: 42.86%, Angle: 14.61 used optimised thing
+    #Accuracy: 0.15, Duration: 14.37 seconds, Total shots: 7, Makes: 3, Misses: 4, FG percentage: 42.86%, Angle: 14.61 same as above

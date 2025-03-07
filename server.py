@@ -7,6 +7,7 @@ import json
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
+cv2.setUseOptimized(True)
 
 # PYTHON PROGRAM TO PROCESS VIDEO AND DETERMINE BASKETBALL OUTCOMES
 MAX_FRAMES = 1750
