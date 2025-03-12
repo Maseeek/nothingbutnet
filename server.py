@@ -10,7 +10,8 @@ from werkzeug.utils import secure_filename
 cv2.setUseOptimized(True)
 
 # PYTHON PROGRAM TO PROCESS VIDEO AND DETERMINE BASKETBALL OUTCOMES
-MAX_FRAMES = 1750
+# MAX_FRAMES = 1750 # optimal for my initial video
+MAX_FRAMES = 5000
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 

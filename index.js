@@ -619,6 +619,7 @@ function getHoopCoords(file) {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         const image = new Image();
+        image.id = 'coords-img';
 
         vid.addEventListener('loadeddata', () => {
             vid.currentTime = 1;
