@@ -237,26 +237,7 @@ $(".home-btn").click(toggleDarkModeHome(sessionStorage.getItem("darkMode") === "
 
 // CLAUDE
 
-// Modified version of your GetFile function to send the file to Python
-function GetFileAndAnalyze() {
-    const showAngle = sessionStorage.getItem("showAngle") === "true";
-    const fileInput = $('<input type="file" accept="video/*">');
 
-    fileInput.on('change', (event) => {
-        const file = event.target.files[0];
-        if (file && file.type.includes('video')) {
-            console.log('File selected:', file.name);
-
-            // Change upload button status
-            $("#upload-button").text("PROCESSING...").css("background-color", "#FFA500");
-
-            // We need to get hoop coordinates before sending the video
-            showHoopSelectionDialog(file);
-        }
-    });
-
-    fileInput.click();
-}
 function showHoopSelectionDialog(file) {
     const dialog = $(`
         <div class="hoop-selection-dialog">
@@ -628,3 +609,96 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+function getHoopCoords(file) {
+    return new Promise((resolve) => {
+        let leftX, leftY, rightX, rightY;
+        let clickCount = 0;
+
+        const vid = document.createElement('video');
+        vid.src = URL.createObjectURL(file);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const image = new Image();
+
+        vid.addEventListener('loadeddata', () => {
+            vid.currentTime = 1;
+        });
+
+        vid.addEventListener('seeked', () => {
+            canvas.width = vid.videoWidth;
+            canvas.height = vid.videoHeight;
+            ctx.drawImage(vid, 0, 0, canvas.width, canvas.height);
+            image.src = canvas.toDataURL();
+        });
+
+        image.addEventListener('load', () => {
+            document.body.appendChild(image);
+        });
+
+        image.addEventListener('click', (event) => {
+            const rect = image.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            if (clickCount === 0) {
+                leftX = x;
+                leftY = y;
+                clickCount++;
+            } else {
+                rightX = x;
+                rightY = y;
+                resolve({ leftX, leftY, rightX, rightY });
+                document.body.removeChild(image);
+                URL.revokeObjectURL(vid.src);
+            }
+        });
+
+        vid.addEventListener('error', () => {
+            console.error('Failed to load video file');
+        });
+
+        vid.load();
+    });
+}
+
+function handleFileUpload(file) {
+    getHoopCoords(file).then(coords => {
+        handleCoordinates(coords, file);
+    });
+}
+
+function handleCoordinates(coords, file) {
+    console.log(`Left Coordinates: X: ${coords.leftX}, Y: ${coords.leftY}`);
+    console.log(`Right Coordinates: X: ${coords.rightX}, Y: ${coords.rightY}`);
+    sendVideoForAnalysis(file, [coords.leftX, coords.leftY], [coords.rightX, coords.rightY]);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadButton = document.getElementById('upload-button');
+    if (uploadButton) {
+        uploadButton.addEventListener('click', GetFileAndAnalyze);
+    }
+});
+
+function GetFileAndAnalyze() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'video/*';
+
+    fileInput.onchange = (event) => {
+        const file = event.target.files[0];
+        if (file && file.type.includes('video')) {
+            console.log('File selected:', file.name);
+
+            // Change upload button status
+            document.getElementById("upload-button").innerHTML = "PROCESSING...";
+            document.getElementById("upload-button").style.backgroundColor = "#FFA500";
+
+            // Get hoop coordinates before sending the video
+            handleFileUpload(file);
+            // showHoopSelectionDialog(file);
+        }
+    };
+
+    fileInput.click();
+}
