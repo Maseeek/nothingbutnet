@@ -7,6 +7,8 @@ import json
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
+# RUNNING ON PORT 5000
+
 cv2.setUseOptimized(True)
 
 # PYTHON PROGRAM TO PROCESS VIDEO AND DETERMINE BASKETBALL OUTCOMES
