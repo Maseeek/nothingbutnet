@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 3000;
 // ========================================
 // ✏️ CONFIGURATION (Update these values)
 // ========================================
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/nbn'; // ✏️ Replace with your DB URI
-const JWT_SECRET = process.env.JWT_SECRET || 'giannis'; // ✏️ Use a strong secret in production
+const MONGODB_URI = process.env.MONGODB_URI; // ✏️ Replace with your DB URI
+const JWT_SECRET = process.env.JWT_SECRET; // ✏️ Use a strong secret in production
 
 // ========================================
 // Middleware
