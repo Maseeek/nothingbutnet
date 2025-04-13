@@ -589,3 +589,11 @@ form {
     pointer-events: none;
 }
 
+#welcome{
+    font-size: 30px;
+    color: #151515;
+    text-align: center;
+    margin: 10px 0;
+    font-weight: bolder;
+
+}

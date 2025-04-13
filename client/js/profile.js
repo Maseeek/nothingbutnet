@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isLoggedIn()) {
             const user = getCurrentUser();
             const username = user.username;
-            document.getElementById('welcome').innerHTML = "Welcome " + user.username;
+            document.getElementById('welcome').innerHTML = "Welcome, " + user.username;
         }
     } catch {
         console.error("Error fetching user data: ", error);
