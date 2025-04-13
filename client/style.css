@@ -480,6 +480,12 @@ form {
     gap: 10px;
     max-width: 300px;
     margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #A63D40;
+    padding: 20px;
+    box-shadow: #A63D40 0px 0px 3px;
+    border-radius: 10px;
+
 }
 
 
@@ -509,5 +515,14 @@ form {
     border-radius: 5px;
     transition: background-color 0.3s ease;
 
+}
+
+#outcome{
+    color: #A63D40;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    -webkit-text-stroke: 0.1px white;
 }
 
