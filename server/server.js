@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const helmet = require('helmet');
 const cors = require('cors');
 const { body, validationResult } = require('express-validator');
+const path = require('path');
 
 // Initialize Express
 const app = express();
@@ -21,7 +22,22 @@ const JWT_SECRET = process.env.JWT_SECRET; // ✏️ Use a strong secret in prod
 // Middleware
 // ========================================
 app.use(helmet()); // Security headers
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000' })); // ✏️ Update with your frontend URL
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:63342', // WebStorm's preview server
+    process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(cors({
+    origin: function(origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+}));
 app.use(express.json()); // Parse JSON bodies
 
 // ========================================
@@ -126,6 +142,17 @@ app.get('/api/profile', async (req, res) => {
         console.error('Profile error:', err);
         res.status(401).json({ error: 'Invalid token' });
     }
+});
+
+
+
+// Serve static files from /client
+app.use(express.static(path.join(__dirname, '../client')));
+
+// Handle SPA routing (place after other routes)
+// More specific catch-all route
+app.get(/^(?!\/api).*/, (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 // ========================================

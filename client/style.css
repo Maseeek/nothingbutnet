@@ -474,4 +474,40 @@ input:checked + .slider:before {
     transform: translate(-50%, -50%);
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+
+#username{
+    font-size: 30px;
+    color: #151515;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    font-weight: bold;
+}
+#password{
+    font-size: 30px;
+    color: #151515;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    font-weight: bold;}
+
+#submit-button{
+    background-color: #A63D40;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+
+}
 
