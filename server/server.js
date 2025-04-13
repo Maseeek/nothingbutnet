@@ -55,6 +55,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true, trim: true, minlength: 3 },
     email: { type: String, unique: true, required: true, lowercase: true, match: /^\S+@\S+\.\S+$/ },
     password: { type: String, required: true, minlength: 6 },
+    emailVerified: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now }
 });
 
@@ -102,6 +103,7 @@ app.post('/api/register',
     }
 );
 
+
 // ► Login
 app.post('/api/login', async (req, res) => {
     try {
@@ -116,8 +118,12 @@ app.post('/api/login', async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        // Generate JWT token (expires in 1 hour)
-        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+        // Generate JWT token (expires in 1 hour) and include username
+        const token = jwt.sign(
+            { userId: user._id, username: user.username }, // Include username here
+            JWT_SECRET,
+            { expiresIn: '1h' }
+        );
         res.json({ token });
 
     } catch (err) {

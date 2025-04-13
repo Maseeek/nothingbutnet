@@ -95,6 +95,7 @@ function getCurrentUser() {
 
     try {
         const payload = JSON.parse(atob(token.split('.')[1]));
+        console.log(payload); // Check if 'username' exists
         return {
             userId: payload.userId,
             username: payload.username,
@@ -124,11 +125,13 @@ function updateAuthUI() {
 
     if (loggedIn) {
         authButton.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f44336" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 21V9a3 3 0 0 1 3-3h6"></path>
-                <polyline points="16 3 21 3 21 8"></polyline>
-                <line x1="21" y1="3" x2="9" y2="15"></line>
-            </svg>
+            
+
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A63D40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 3H14a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h6"></path>
+    <polyline points="7 9 2 12 7 15"></polyline>
+    <line x1="14" y1="12" x2="2" y2="12"></line>
+</svg>
             Logout
         `;
         authButton.onclick = logout;
