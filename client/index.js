@@ -43,6 +43,7 @@ dropdownMenu.addEventListener('click', (e) => {
     e.stopPropagation();
 });
 
+
 function toggleAngle(enabled) {
     console.log('Angle toggle enabled: ' + enabled);
     if (enabled) {
@@ -703,3 +704,4 @@ function GetFileAndAnalyze() {
 
     fileInput.click();
 }
+

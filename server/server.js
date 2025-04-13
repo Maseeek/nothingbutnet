@@ -24,7 +24,8 @@ const JWT_SECRET = process.env.JWT_SECRET; // ✏️ Use a strong secret in prod
 app.use(helmet()); // Security headers
 const allowedOrigins = [
     'http://localhost:3000',
-    'http://localhost:63342', // WebStorm's preview server
+    'http://localhost:63342',
+    'http://localhost:63343',// WebStorm's preview server
     process.env.FRONTEND_URL
 ].filter(Boolean);
 

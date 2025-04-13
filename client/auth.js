@@ -116,18 +116,49 @@ function logout() {
 
 // UI update function with null checks
 function updateAuthUI() {
-    const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const profileContent = document.querySelector('.profile-content');
+    const authButton = document.getElementById('auth-btn'); // Ensure the button has this ID in your HTML
+
+    if (!authButton) return;
 
     const loggedIn = isLoggedIn();
 
-    if (loginBtn) loginBtn.classList.toggle('hidden', loggedIn);
-    if (logoutBtn) logoutBtn.classList.toggle('hidden', !loggedIn);
-    if (profileContent) {
-        profileContent.style.display = loggedIn ? 'block' : 'none';
+    if (loggedIn) {
+        authButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f44336" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21V9a3 3 0 0 1 3-3h6"></path>
+                <polyline points="16 3 21 3 21 8"></polyline>
+                <line x1="21" y1="3" x2="9" y2="15"></line>
+            </svg>
+            Logout
+        `;
+        authButton.onclick = logout;
+    } else {
+        authButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3H9a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h6"></path>
+                <polyline points="10 9 15 12 10 15"></polyline>
+                <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+            Login
+        `;
+        authButton.onclick = () => {
+            window.location.href = 'login.html';
+        };
     }
 }
+
+// Initialize event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    updateAuthUI();
+
+    // Ensure the button is updated dynamically on page load
+    const authButton = document.getElementById('auth-btn');
+    if (authButton) {
+        authButton.addEventListener('click', () => {
+            updateAuthUI();
+        });
+    }
+});
 
 // Initialize event listeners
 document.addEventListener('DOMContentLoaded', () => {

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <div class="nav-container">
     <a href="index.html">
         <button class="home-btn">
@@ -51,13 +52,12 @@
             </svg>
             Settings
         </a>
+        <a id="auth-btn" class="dropdown-item"></a>
     </div>
 </div>
-
 <header><h1>REGISTER</h1></header>
-<div class="nav-container">
-    <!-- Copy the same nav container from your login.html -->
-</div>
+
+
 
 <form id="registerForm">
     <input type="text" id="reg-username" placeholder="Username" required autocomplete="username">
@@ -67,9 +67,9 @@
     <button type="submit">Register</button>
     <p id="reg-outcome"></p>
 </form>
-
+<script src="index.js"></script>
 <script src="auth.js" type="module"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="index.js"></script>
+
 </body>
 </html>
