@@ -526,3 +526,124 @@ form {
     -webkit-text-stroke: 0.1px white;
 }
 
+/* Registration Form Specific Styles */
+#reg-username, #reg-email, #reg-password, #reg-confirm-password {
+    font-size: 30px; /* Larger font size */
+    padding: 15px; /* Increased padding */
+    border: 2px solid #A63D40;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    text-align: center;
+}
+
+#reg-username:focus, #reg-email:focus, #reg-password:focus, #reg-confirm-password:focus {
+    border-color: #560D10;
+}
+
+#reg-outcome {
+    color: #A63D40;
+    font-size: 25px; /* Larger font size */
+    text-align: center;
+    margin-top: 15px; /* Increased margin */
+    -webkit-text-stroke: 0.1px white;
+}
+
+#registerForm button {
+    background-color: #A63D40;
+    color: white;
+    border: none;
+    padding: 15px; /* Increased padding */
+    font-size: 25px; /* Larger font size */
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+#registerForm button:hover {
+    background-color: #8b3235;
+}
+
+#redirect{
+    font-size: 20px;
+    color: #151515;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    font-weight: bold;
+}
+
+/* Auth button styles */
+.auth-buttons {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#login-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+#logout-btn {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* Auth Buttons */
+.auth-buttons {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+
+#login-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#logout-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Profile Content */
+.profile-content {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.user-info {
+    text-align: center;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+/* Dropdown Menu (existing) */
+.hidden {
+    display: none;
+}
+
