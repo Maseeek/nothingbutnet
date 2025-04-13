@@ -7,32 +7,26 @@ h1 {
     color: #9D1419;
     font-size: 80px;
     text-align: center;
-
-    transition: transform 0.4s;;
+    transition: transform 0.4s;
     text-shadow: 1px 1px 0px white;
     margin-bottom: 0px;
     background-color: #151515;
     border-radius: 5px;
-
     justify-content: center;
     width: 500px;
     margin: auto;
     margin-top: 35px;
     z-index: 1;
-
-
 }
 
 h1:hover {
     transform: scale(1.2) rotate(-2deg);
-
 }
 
 p {
     color: #151515;
     font-size: 25px;
     text-align: center;
-
 }
 
 .flexbox {
@@ -52,14 +46,12 @@ p {
     box-shadow: 5px 5px 5px #9D1419;
     width: 520px;
     height: 250px;
-    transition: scale 0.4s;;
+    transition: scale 0.4s;
 }
 
 .flexbox div:hover {
     scale: 1.05;
     filter: brightness(110%);
-
-
 }
 
 .flexbox > div > h2 {
@@ -72,12 +64,11 @@ p {
     align-items: center;
     padding: 6px;
     flex-direction: row;
-    Border: 2px darkred solid;
+    border: 2px darkred solid;
     width: 350px;
     margin: auto;
     background-color: rgba(242, 242, 242, 0.5);
 }
-
 
 .upload-box:hover {
     scale: 1.01;
@@ -87,8 +78,6 @@ p {
 .upload-box > div > button {
     font-size: large;
     border: darkred solid 2px;
-
-
 }
 
 .upload-box > div > button:hover {
@@ -128,34 +117,24 @@ body {
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    width: 60px; /* Set the width */
-    height: 60px; /* Set the height */
-    margin: 35px;
-    margin-right: 10px;
-    margin-bottom: 5px;
+    width: 60px;
+    height: 60px;
+    margin: 35px 10px 5px;
     z-index: 10;
 }
 
 .profile-btn:hover {
     background: #560D10 !important;
     transform: scale(1.05);
-
 }
 
 .profile-btn svg {
     color: #9D1419;
-
-    /* Matches your existing color scheme */
-
-
 }
 
 .profile-btn svg:hover {
     color: #F2F2F2 !important;
-
-    /* Matches your existing color scheme */
 }
-
 
 /* Dropdown menu styling */
 .dropdown-menu {
@@ -172,7 +151,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Hide the dropdown */
 .hidden {
     opacity: 0;
     transform: translateY(-10px);
@@ -336,16 +314,13 @@ input:checked + .slider:before {
     transition: all 0.3s ease;
     width: 60px;
     height: 60px;
-    margin: 35px;
-    margin-left: 10px;
-    margin-bottom: 5px;
+    margin: 35px 10px 5px;
     z-index: 10;
 }
 
 .home-btn:hover {
     background: #560D10 !important;
     transform: scale(1.05);
-
 }
 
 .home-btn svg {
@@ -353,8 +328,7 @@ input:checked + .slider:before {
 }
 
 .home-btn svg:hover {
-    color: #F2F2F2;
-!important;
+    color: #F2F2F2 !important;
 }
 
 .profile-container {
@@ -369,9 +343,7 @@ input:checked + .slider:before {
     width: 700px;
     border: #151515 solid 2px;
     background-color: rgba(248, 249, 250, 0.7);
-
 }
-
 
 .profile-picture {
     width: 200px;
@@ -382,7 +354,6 @@ input:checked + .slider:before {
     margin-right: 50px;
     overflow: hidden;
     border: #151515 solid 2px;
-
 }
 
 .profile-picture img {
@@ -399,13 +370,11 @@ input:checked + .slider:before {
     margin-right: 0px;
     padding: 10px;
     width: 500px;
-
 }
 
 .profile-info > h1 {
     font-size: 70px;
     padding: 0px;
-
     color: #151515;
     height: 50px;
     text-align: start;
@@ -424,8 +393,6 @@ input:checked + .slider:before {
     margin: 0px;
     align-items: start;
     width: 100%;
-
-
 }
 
 .profile-info-text {
@@ -450,7 +417,6 @@ input:checked + .slider:before {
     margin: 10px;
     font-size: 50px;
     margin-left: 0px;
-
 }
 
 .player-value {
@@ -485,27 +451,17 @@ form {
     padding: 20px;
     box-shadow: #A63D40 0px 0px 3px;
     border-radius: 10px;
-
 }
 
-
-#username{
+#username, #password {
     font-size: 30px;
     color: #151515;
     text-align: center;
-    margin-bottom: 20px;
-    margin-top: 0px;
+    margin: 20px 0;
     font-weight: bold;
 }
-#password{
-    font-size: 30px;
-    color: #151515;
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 0px;
-    font-weight: bold;}
 
-#submit-button{
+#submit-button {
     background-color: #A63D40;
     color: white;
     border: none;
@@ -514,22 +470,20 @@ form {
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-
 }
 
-#outcome{
+#outcome {
     color: #A63D40;
     font-size: 20px;
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px 0;
     -webkit-text-stroke: 0.1px white;
 }
 
 /* Registration Form Specific Styles */
 #reg-username, #reg-email, #reg-password, #reg-confirm-password {
-    font-size: 30px; /* Larger font size */
-    padding: 15px; /* Increased padding */
+    font-size: 30px;
+    padding: 15px;
     border: 2px solid #A63D40;
     border-radius: 8px;
     outline: none;
@@ -543,9 +497,9 @@ form {
 
 #reg-outcome {
     color: #A63D40;
-    font-size: 25px; /* Larger font size */
+    font-size: 25px;
     text-align: center;
-    margin-top: 15px; /* Increased margin */
+    margin-top: 15px;
     -webkit-text-stroke: 0.1px white;
 }
 
@@ -553,8 +507,8 @@ form {
     background-color: #A63D40;
     color: white;
     border: none;
-    padding: 15px; /* Increased padding */
-    font-size: 25px; /* Larger font size */
+    padding: 15px;
+    font-size: 25px;
     cursor: pointer;
     border-radius: 8px;
     transition: background-color 0.3s ease;
@@ -564,43 +518,15 @@ form {
     background-color: #8b3235;
 }
 
-#redirect{
+#redirect {
     font-size: 20px;
     color: #151515;
     text-align: center;
-    margin-bottom: 10px;
-    margin-top: 0px;
+    margin: 10px 0;
     font-weight: bold;
 }
 
 /* Auth button styles */
-.auth-buttons {
-    margin: 20px 0;
-    text-align: center;
-}
-
-.btn {
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#login-btn {
-    background-color: #4CAF50; /* Green */
-    color: white;
-}
-
-#logout-btn {
-    background-color: #f44336; /* Red */
-    color: white;
-}
-
-.hidden {
-    display: none;
-}
-
-
-/* Auth Buttons */
 .auth-buttons {
     text-align: center;
     margin: 20px 0;
@@ -641,9 +567,3 @@ form {
     object-fit: cover;
     margin-bottom: 15px;
 }
-
-/* Dropdown Menu (existing) */
-.hidden {
-    display: none;
-}
-
