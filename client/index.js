@@ -615,12 +615,138 @@ function getHoopCoords(file) {
         let leftX, leftY, rightX, rightY;
         let clickCount = 0;
 
+        // Create a modal overlay
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        overlay.style.display = 'flex';
+        overlay.style.justifyContent = 'center';
+        overlay.style.alignItems = 'center';
+        overlay.style.zIndex = '1000';
+
+        // Create modal container with larger size (approx 1.7x)
+        const modalContainer = document.createElement('div');
+        modalContainer.style.width = '850px'; // Increased from 500px
+        modalContainer.style.maxWidth = '92%';
+        modalContainer.style.backgroundColor = 'white';
+        modalContainer.style.borderRadius = '12px'; // Slightly larger radius
+        modalContainer.style.overflow = 'hidden';
+        modalContainer.style.boxShadow = '0 6px 30px rgba(0, 0, 0, 0.3)';
+        modalContainer.style.display = 'flex';
+        modalContainer.style.flexDirection = 'column';
+        modalContainer.style.border = '3px solid #3498db';
+
+        // Create header
+        const header = document.createElement('div');
+        header.textContent = 'Select Hoop Points';
+        header.style.padding = '16px 22px'; // Increased padding
+        header.style.backgroundColor = '#3498db';
+        header.style.color = 'white';
+        header.style.fontWeight = 'bold';
+        header.style.fontSize = '20px'; // Larger font
+        header.style.display = 'flex';
+        header.style.justifyContent = 'space-between';
+        header.style.alignItems = 'center';
+
+        // Add close button
+        const closeButton = document.createElement('button');
+        closeButton.innerHTML = '&times;'; // × symbol
+        closeButton.style.background = 'none';
+        closeButton.style.border = 'none';
+        closeButton.style.color = 'white';
+        closeButton.style.fontSize = '32px'; // Larger
+        closeButton.style.cursor = 'pointer';
+        closeButton.style.padding = '0 8px';
+        closeButton.style.lineHeight = '1';
+        closeButton.style.fontWeight = 'bold';
+        header.appendChild(closeButton);
+
+        // Create instruction text
+        const instructions = document.createElement('div');
+        instructions.textContent = 'Click on the left side of the hoop first, then the right side';
+        instructions.style.padding = '14px 22px'; // Increased padding
+        instructions.style.backgroundColor = '#f5f7fa';
+        instructions.style.fontSize = '16px'; // Larger font
+        instructions.style.borderBottom = '1px solid #e1e5eb';
+
+        // Create image container with larger height
+        const imageContainer = document.createElement('div');
+        imageContainer.style.padding = '16px';
+        imageContainer.style.height = '475px'; // Increased from 280px (1.7x)
+        imageContainer.style.display = 'flex';
+        imageContainer.style.justifyContent = 'center';
+        imageContainer.style.alignItems = 'center';
+        imageContainer.style.overflow = 'hidden';
+        imageContainer.style.backgroundColor = '#f0f0f0';
+        imageContainer.style.border = '1px dashed #aaa';
+        imageContainer.style.margin = '0 16px'; // Slightly larger margins
+
+        // Create status bar
+        const statusBar = document.createElement('div');
+        statusBar.style.padding = '16px 22px'; // Increased padding
+        statusBar.style.borderTop = '1px solid #e1e5eb';
+        statusBar.style.fontSize = '16px'; // Larger font
+        statusBar.style.display = 'flex';
+        statusBar.style.justifyContent = 'space-between';
+        statusBar.style.alignItems = 'center';
+        statusBar.style.backgroundColor = '#f8f9fa';
+
+        const status = document.createElement('div');
+        status.textContent = 'Waiting for points: 0/2 selected';
+        statusBar.appendChild(status);
+
+        // Create button container
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.gap = '10px'; // Slightly larger gap
+        statusBar.appendChild(buttonContainer);
+
+        // Create cancel button with improved styling
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = 'Cancel';
+        cancelButton.style.padding = '8px 18px'; // Larger button
+        cancelButton.style.border = '1px solid #ccc';
+        cancelButton.style.borderRadius = '5px'; // Slightly larger radius
+        cancelButton.style.backgroundColor = '#f5f5f5';
+        cancelButton.style.cursor = 'pointer';
+        cancelButton.style.fontFamily = 'inherit';
+        cancelButton.style.fontSize = '16px'; // Larger font
+        buttonContainer.appendChild(cancelButton);
+
+        // Original video and canvas setup
         const vid = document.createElement('video');
         vid.src = URL.createObjectURL(file);
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         const image = new Image();
         image.id = 'coords-img';
+        image.style.maxHeight = '445px'; // Increased from 260px (1.7x)
+        image.style.maxWidth = '100%';
+        image.style.objectFit = 'contain';
+        image.style.cursor = 'crosshair';
+        image.style.border = '1px solid #ddd';
+
+        // Assemble the modal
+        modalContainer.appendChild(header);
+        modalContainer.appendChild(instructions);
+        imageContainer.appendChild(image);
+        modalContainer.appendChild(imageContainer);
+        modalContainer.appendChild(statusBar);
+        overlay.appendChild(modalContainer);
+
+        // Handle close/cancel
+        const closeModal = () => {
+            document.body.removeChild(overlay);
+            URL.revokeObjectURL(vid.src);
+            resolve(null); // Resolve with null to indicate cancellation
+        };
+
+        closeButton.addEventListener('click', closeModal);
+        cancelButton.addEventListener('click', closeModal);
 
         vid.addEventListener('loadeddata', () => {
             vid.currentTime = 1;
@@ -634,29 +760,74 @@ function getHoopCoords(file) {
         });
 
         image.addEventListener('load', () => {
-            document.body.appendChild(image);
+            document.body.appendChild(overlay);
         });
 
         image.addEventListener('click', (event) => {
             const rect = image.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+            // Calculate the scaling factor between original image and displayed size
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            // Get coordinates relative to the displayed image
+            const displayX = event.clientX - rect.left;
+            const displayY = event.clientY - rect.top;
+
+            // Convert to coordinates in the original image
+            const x = displayX * scaleX;
+            const y = displayY * scaleY;
+
+            // Draw point on the canvas
+            const pointRadius = Math.max(6, canvas.width / 90); // Slightly larger point
+            ctx.fillStyle = clickCount === 0 ? '#2196F3' : '#F44336'; // Blue for left, red for right
+            ctx.beginPath();
+            ctx.arc(x, y, pointRadius, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.lineWidth = 3; // Thicker outline
+            ctx.strokeStyle = 'white';
+            ctx.stroke();
+            image.src = canvas.toDataURL();
 
             if (clickCount === 0) {
                 leftX = x;
                 leftY = y;
                 clickCount++;
+                status.textContent = 'Waiting for points: 1/2 selected';
+                instructions.textContent = 'Now click on the right side of the hoop';
             } else {
                 rightX = x;
                 rightY = y;
-                resolve({ leftX, leftY, rightX, rightY });
-                document.body.removeChild(image);
-                URL.revokeObjectURL(vid.src);
+                status.textContent = 'Points selected successfully!';
+
+                // Remove cancel button
+                buttonContainer.removeChild(cancelButton);
+
+                // Create confirm button with improved styling
+                const confirmButton = document.createElement('button');
+                confirmButton.textContent = 'Confirm';
+                confirmButton.style.padding = '8px 20px'; // Larger button
+                confirmButton.style.border = 'none';
+                confirmButton.style.borderRadius = '5px'; // Slightly larger radius
+                confirmButton.style.backgroundColor = '#4CAF50';
+                confirmButton.style.color = 'white';
+                confirmButton.style.cursor = 'pointer';
+                confirmButton.style.fontFamily = 'inherit';
+                confirmButton.style.fontSize = '16px'; // Larger font
+                confirmButton.style.fontWeight = '500';
+                buttonContainer.appendChild(confirmButton);
+
+                confirmButton.addEventListener('click', () => {
+                    document.body.removeChild(overlay);
+                    URL.revokeObjectURL(vid.src);
+                    resolve({ leftX, leftY, rightX, rightY });
+                });
             }
         });
 
         vid.addEventListener('error', () => {
             console.error('Failed to load video file');
+            instructions.textContent = 'Error: Failed to load video file';
+            instructions.style.color = 'red';
         });
 
         vid.load();
