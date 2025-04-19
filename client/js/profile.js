@@ -1,5 +1,4 @@
 import { isLoggedIn, getCurrentUser, logout, updateAuthUI } from '../auth.js';
-import {displayFGResults} from '../index.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize auth UI
@@ -15,6 +14,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = getCurrentUser();
             const username = user.username;
             document.getElementById('welcome').innerHTML = "Welcome, " + user.username;
+            const ver = document.getElementById('email-verification');
+            const verButton = document.getElementById('verify-button');
+            if(user.verified === false) {
+                console.error("Email not verified");
+                ver.innerHTML = "Please verify your email address.";
+                ver.style.color = "#ffc300";
+                verButton.style.backgroundColor = "#ffc300";
+
+
+
+            }
+            else{
+                console.log("Email verified: " + user.verified);
+                ver.innerHTML = "Email verified.";
+                ver.style.color = "#55a630";
+                verButton.remove();
+            }
             // Fetch user data from the server
             // const data = getdata  // going to make a collection which has all user shots and can get it from there
             // displayFGResults(data);
@@ -23,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Error fetching user data: ", error);
         document.getElementById('welcome').innerHTML = "Welcome Guest";
     }
+
 });
     // Display user data
 

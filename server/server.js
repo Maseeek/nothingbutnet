@@ -118,9 +118,9 @@ app.post('/api/login', async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        // Generate JWT token (expires in 1 hour) and include username
+        // Generate JWT token (expires in 1 hour) and include emailVerified
         const token = jwt.sign(
-            { userId: user._id, username: user.username }, // Include username here
+            { userId: user._id, username: user.username, emailVerified: user.emailVerified },
             JWT_SECRET,
             { expiresIn: '1h' }
         );
@@ -144,7 +144,12 @@ app.get('/api/profile', async (req, res) => {
         const user = await User.findById(decoded.userId).select('-password');
         if (!user) return res.status(404).json({ error: 'User not found' });
 
-        res.json(user);
+        // Include emailVerified in the response
+        res.json({
+            userId: user._id,
+            username: user.username,
+            emailVerified: user.emailVerified
+        });
     } catch (err) {
         console.error('Profile error:', err);
         res.status(401).json({ error: 'Invalid token' });
