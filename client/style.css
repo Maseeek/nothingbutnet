@@ -531,9 +531,8 @@ form {
 }
 
 /* Auth button styles */
-.auth-buttons {
-    text-align: center;
-    margin: 20px 0;
+#auth-btn {
+    cursor: pointer;
 }
 
 .btn {
@@ -546,11 +545,13 @@ form {
 #login-btn {
     background-color: #4CAF50;
     color: white;
+    cursor: pointer;
 }
 
 #logout-btn {
     background-color: #f44336;
     color: white;
+    cursor: pointer;
 }
 
 /* Profile Content */
@@ -581,6 +582,7 @@ form {
     text-decoration: none;
     border-radius: 0 0 4px 4px; /* Rounded corners only at the bottom */
     transition: background-color 0.2s ease;
+    cursor: pointer;
 
 }
 
