@@ -1,0 +1,8 @@
+# Netlify redirects for SPA routing
+# This ensures all navigation requests serve index.html for client-side routing
+
+# API routes should not be redirected
+/api/* 200
+
+# All other routes should serve index.html with 200 status
+/* /index.html 200
