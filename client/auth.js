@@ -26,7 +26,11 @@ async function login(username, password) {
 
         // Force redirect after short delay
         setTimeout(() => {
-            window.location.href = 'profile.html';
+            if (window.navigateTo) {
+                window.navigateTo('/profile');
+            } else {
+                window.location.href = 'profile.html';
+            }
         }, 1000);
 
     } catch (error) {
@@ -68,7 +72,11 @@ async function register(username, email, password, confirmPassword) {
         outcomeEl.style.color = 'green';
 
         setTimeout(() => {
-            window.location.href = 'login.html';
+            if (window.navigateTo) {
+                window.navigateTo('/login');
+            } else {
+                window.location.href = 'login.html';
+            }
         }, 1500);
 
     } catch (err) {
@@ -85,7 +93,11 @@ function isLoggedIn() {
 
 function requireAuth() {
     if (!isLoggedIn()) {
-        window.location.href = 'login.html';
+        if (window.navigateTo) {
+            window.navigateTo('/login');
+        } else {
+            window.location.href = 'login.html';
+        }
     }
 }
 
@@ -109,7 +121,11 @@ function getCurrentUser() {
 
 function logout() {
     localStorage.removeItem('authToken');
-    window.location.href = 'login.html';
+    if (window.navigateTo) {
+        window.navigateTo('/login');
+    } else {
+        window.location.href = 'login.html';
+    }
 
     // Optional: Notify server
     fetch(`${API_BASE}/api/logout`, { method: 'POST' })
@@ -146,7 +162,11 @@ function updateAuthUI() {
             Login
         `;
         authButton.onclick = () => {
-            window.location.href = 'login.html';
+            if (window.navigateTo) {
+                window.navigateTo('/login');
+            } else {
+                window.location.href = 'login.html';
+            }
         };
     }
 }

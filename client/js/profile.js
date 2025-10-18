@@ -6,7 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Redirect if not logged in
     if (!isLoggedIn()) {
-        window.location.href = 'login.html';
+        if (window.navigateTo) {
+            window.navigateTo('/login');
+        } else {
+            window.location.href = 'login.html';
+        }
         return;
     }
     try {
