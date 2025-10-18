@@ -1,125 +1,122 @@
 // Simple SPA Router for Nothing But Net
+// This router intercepts link clicks and uses the History API for navigation
 (function() {
     'use strict';
-
-    // Define routes mapping paths to HTML files
-    const routes = {
-        '/': 'index.html',
-        '/index.html': 'index.html',
-        '/profile.html': 'profile.html',
-        '/profile': 'profile.html',
-        '/settings.html': 'settings.html',
-        '/settings': 'settings.html',
-        '/statistics.html': 'statistics.html',
-        '/statistics': 'statistics.html',
-        '/login.html': 'login.html',
-        '/login': 'login.html',
-        '/register.html': 'register.html',
-        '/register': 'register.html'
-    };
-
-    // Content container where pages will be loaded
-    let contentContainer = null;
-
-    // Load page content
-    async function loadPage(path) {
-        // Normalize path
-        let normalizedPath = path;
-        if (!normalizedPath.startsWith('/')) {
-            normalizedPath = '/' + normalizedPath;
-        }
-
-        // Get the HTML file for this route
-        const htmlFile = routes[normalizedPath] || routes[path] || 'index.html';
-        
-        try {
-            const response = await fetch(htmlFile);
-            if (!response.ok) {
-                throw new Error(`Failed to load ${htmlFile}`);
-            }
-            
-            const html = await response.text();
-            
-            // Parse the HTML to extract body content
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            
-            // Replace the entire body content
-            document.body.innerHTML = doc.body.innerHTML;
-            
-            // Re-execute scripts in the new content
-            const scripts = doc.body.querySelectorAll('script');
-            scripts.forEach(oldScript => {
-                const newScript = document.createElement('script');
-                Array.from(oldScript.attributes).forEach(attr => {
-                    newScript.setAttribute(attr.name, attr.value);
-                });
-                newScript.textContent = oldScript.textContent;
-                document.body.appendChild(newScript);
-            });
-
-            // Update page title
-            if (doc.title) {
-                document.title = doc.title;
-            }
-
-            // Initialize navigation after page load
-            initializeNavigation();
-
-        } catch (error) {
-            console.error('Error loading page:', error);
-            // Fallback to regular navigation if loading fails
-            window.location.href = htmlFile;
-        }
-    }
-
-    // Navigate to a new page
-    function navigate(path, pushState = true) {
-        if (pushState) {
-            history.pushState({ path }, '', path);
-        }
-        loadPage(path);
-    }
 
     // Initialize navigation event handlers
     function initializeNavigation() {
         // Handle all anchor clicks
-        document.querySelectorAll('a').forEach(link => {
-            const href = link.getAttribute('href');
+        document.addEventListener('click', (e) => {
+            // Find the clicked anchor element (could be child of anchor)
+            const anchor = e.target.closest('a');
             
-            // Only handle internal navigation (not external links or #)
-            if (href && 
-                !href.startsWith('http') && 
-                !href.startsWith('//') && 
-                !href.startsWith('#') &&
-                !href.startsWith('mailto:')) {
-                
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    navigate(href);
-                });
+            if (!anchor) return;
+            
+            const href = anchor.getAttribute('href');
+            
+            // Only handle internal navigation (not external links, # anchors, or mailto)
+            if (!href || 
+                href.startsWith('http') || 
+                href.startsWith('//') || 
+                href.startsWith('#') ||
+                href.startsWith('mailto:')) {
+                return;
             }
-        });
+            
+            // Prevent default navigation
+            e.preventDefault();
+            
+            // Navigate using History API
+            const url = href.startsWith('/') ? href : '/' + href.replace('.html', '');
+            navigate(url);
+        }, true); // Use capture phase to catch all clicks
+    }
+
+    // Navigate to a new URL
+    function navigate(url) {
+        // Update browser history
+        history.pushState({ url }, '', url);
+        
+        // Load the new page
+        loadPage(url);
+    }
+
+    // Load page content
+    function loadPage(url) {
+        // Normalize URL to map to HTML file
+        let htmlFile = url;
+        
+        if (url === '/' || url === '') {
+            htmlFile = '/index.html';
+        } else if (!url.endsWith('.html')) {
+            // Remove leading slash and add .html extension
+            htmlFile = url.replace(/^\//, '') + '.html';
+        }
+        
+        // Fetch and load the page
+        fetch(htmlFile)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${htmlFile}`);
+                }
+                return response.text();
+            })
+            .then(html => {
+                // Parse the HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Replace body content
+                document.body.innerHTML = doc.body.innerHTML;
+                
+                // Update page title
+                if (doc.title) {
+                    document.title = doc.title;
+                }
+                
+                // Re-execute inline scripts
+                const scripts = document.body.querySelectorAll('script');
+                scripts.forEach(oldScript => {
+                    if (!oldScript.src) {
+                        // Only re-execute inline scripts
+                        const newScript = document.createElement('script');
+                        newScript.textContent = oldScript.textContent;
+                        oldScript.parentNode.replaceChild(newScript, oldScript);
+                    }
+                });
+                
+                // Reinitialize navigation
+                initializeNavigation();
+                
+                // Trigger DOMContentLoaded event for the new content
+                const event = new Event('DOMContentLoaded');
+                document.dispatchEvent(event);
+            })
+            .catch(error => {
+                console.error('Error loading page:', error);
+                // On error, fall back to full page load
+                window.location.href = htmlFile;
+            });
     }
 
     // Handle browser back/forward buttons
     window.addEventListener('popstate', (e) => {
-        const path = e.state?.path || window.location.pathname;
-        loadPage(path);
+        const url = e.state?.url || window.location.pathname;
+        loadPage(url);
     });
 
-    // Initialize router on page load
+    // Initialize on page load
     window.addEventListener('DOMContentLoaded', () => {
-        // Set initial state
+        // Set initial history state
         const currentPath = window.location.pathname;
-        history.replaceState({ path: currentPath }, '', currentPath);
+        history.replaceState({ url: currentPath }, '', currentPath);
         
-        // If we're on a route that's not the default, load that page
-        if (currentPath !== '/' && currentPath !== '/index.html') {
+        // Initialize navigation handlers
+        initializeNavigation();
+        
+        // If we're on a non-standard route, ensure content is loaded
+        if (currentPath !== '/' && currentPath !== '/index.html' && !currentPath.endsWith('.html')) {
             loadPage(currentPath);
-        } else {
-            // Initialize navigation for current page
-            initializeNavigation();
         }
     });
 

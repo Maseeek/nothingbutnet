@@ -21,7 +21,16 @@ const JWT_SECRET = process.env.JWT_SECRET; // ✏️ Use a strong secret in prod
 // ========================================
 // Middleware
 // ========================================
-app.use(helmet()); // Security headers
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "https://code.jquery.com"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            imgSrc: ["'self'", "data:"],
+        }
+    }
+})); // Security headers
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:63342',
@@ -65,8 +74,8 @@ const User = mongoose.model('User', userSchema);
 // Routes
 // ========================================
 
-// ► Health Check
-app.get('/', (req, res) => res.send('Server is running 🚀'));
+// ► Health Check (removed to allow serving index.html at root)
+// app.get('/', (req, res) => res.send('Server is running 🚀'));
 
 // ► Register
 app.post('/api/register',
